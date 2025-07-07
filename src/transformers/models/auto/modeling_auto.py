@@ -110,6 +110,7 @@ MODEL_MAPPING_NAMES = OrderedDict(
         ("dpr", "DPRQuestionEncoder"),
         ("dpt", "DPTModel"),
         ("efficientformer", "EfficientFormerModel"),
+        ("efficientloftr", "EfficientLoFTRModel"),
         ("efficientnet", "EfficientNetModel"),
         ("electra", "ElectraModel"),
         ("emu3", "Emu3Model"),
@@ -186,7 +187,6 @@ MODEL_MAPPING_NAMES = OrderedDict(
         ("layoutlmv3", "LayoutLMv3Model"),
         ("led", "LEDModel"),
         ("levit", "LevitModel"),
-        ("lightglue", "LightGlueForKeypointMatching"),
         ("lilt", "LiltModel"),
         ("llama", "LlamaModel"),
         ("llama4", "Llama4ForConditionalGeneration"),
@@ -311,7 +311,6 @@ MODEL_MAPPING_NAMES = OrderedDict(
         ("squeezebert", "SqueezeBertModel"),
         ("stablelm", "StableLmModel"),
         ("starcoder2", "Starcoder2Model"),
-        ("superglue", "SuperGlueForKeypointMatching"),
         ("swiftformer", "SwiftFormerModel"),
         ("swin", "SwinModel"),
         ("swin2sr", "Swin2SRModel"),
@@ -1579,6 +1578,13 @@ MODEL_FOR_KEYPOINT_DETECTION_MAPPING_NAMES = OrderedDict(
     ]
 )
 
+MODEL_FOR_KEYPOINT_MATCHING_MAPPING_NAMES = OrderedDict(
+    [
+        ("efficientloftr", "EfficientLoFTRForKeypointMatching"),
+        ("lightglue", "LightGlueForKeypointMatching"),
+        ("superglue", "SuperGlueForKeypointMatching"),
+    ]
+)
 
 MODEL_FOR_TEXT_ENCODING_MAPPING_NAMES = OrderedDict(
     [
@@ -1740,6 +1746,8 @@ MODEL_FOR_KEYPOINT_DETECTION_MAPPING = _LazyAutoMapping(
     CONFIG_MAPPING_NAMES, MODEL_FOR_KEYPOINT_DETECTION_MAPPING_NAMES
 )
 
+MODEL_FOR_KEYPOINT_MATCHING_MAPPING = _LazyAutoMapping(CONFIG_MAPPING_NAMES, MODEL_FOR_KEYPOINT_MATCHING_MAPPING_NAMES)
+
 MODEL_FOR_TEXT_ENCODING_MAPPING = _LazyAutoMapping(CONFIG_MAPPING_NAMES, MODEL_FOR_TEXT_ENCODING_MAPPING_NAMES)
 
 MODEL_FOR_TIME_SERIES_CLASSIFICATION_MAPPING = _LazyAutoMapping(
@@ -1765,6 +1773,10 @@ class AutoModelForMaskGeneration(_BaseAutoModelClass):
 
 class AutoModelForKeypointDetection(_BaseAutoModelClass):
     _model_mapping = MODEL_FOR_KEYPOINT_DETECTION_MAPPING
+
+
+class AutoModelForKeypointMatching(_BaseAutoModelClass):
+    _model_mapping = MODEL_FOR_KEYPOINT_MATCHING_MAPPING
 
 
 class AutoModelForTextEncoding(_BaseAutoModelClass):
@@ -2102,6 +2114,7 @@ __all__ = [
     "MODEL_FOR_IMAGE_SEGMENTATION_MAPPING",
     "MODEL_FOR_IMAGE_TO_IMAGE_MAPPING",
     "MODEL_FOR_KEYPOINT_DETECTION_MAPPING",
+    "MODEL_FOR_KEYPOINT_MATCHING_MAPPING",
     "MODEL_FOR_INSTANCE_SEGMENTATION_MAPPING",
     "MODEL_FOR_MASKED_IMAGE_MODELING_MAPPING",
     "MODEL_FOR_MASKED_LM_MAPPING",
@@ -2147,6 +2160,7 @@ __all__ = [
     "AutoModelForImageToImage",
     "AutoModelForInstanceSegmentation",
     "AutoModelForKeypointDetection",
+    "AutoModelForKeypointMatching",
     "AutoModelForMaskGeneration",
     "AutoModelForTextEncoding",
     "AutoModelForMaskedImageModeling",
