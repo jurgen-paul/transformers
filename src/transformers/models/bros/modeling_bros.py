@@ -184,7 +184,7 @@ class BrosTextEmbeddings(nn.Module):
 
 
 class BrosSelfAttention(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, layer_idx=None):
         super().__init__()
         if config.hidden_size % config.num_attention_heads != 0 and not hasattr(config, "embedding_size"):
             raise ValueError(
@@ -207,6 +207,7 @@ class BrosSelfAttention(nn.Module):
             self.distance_embedding = nn.Embedding(2 * config.max_position_embeddings - 1, self.attention_head_size)
 
         self.is_decoder = config.is_decoder
+        self.layer_idx = layer_idx
 
     @deprecate_kwarg("past_key_value", version="4.54.0")
     def forward(
@@ -309,9 +310,9 @@ class BrosSelfOutput(nn.Module):
 
 
 class BrosAttention(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, layer_idx=None):
         super().__init__()
-        self.self = BrosSelfAttention(config)
+        self.self = BrosSelfAttention(config, layer_idx=layer_idx)
         self.output = BrosSelfOutput(config)
         self.pruned_heads = set()
 
