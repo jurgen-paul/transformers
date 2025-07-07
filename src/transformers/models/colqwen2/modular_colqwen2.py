@@ -272,6 +272,8 @@ class ColQwen2ForRetrievalOutput(ModelOutput):
     """
 )
 class ColQwen2ForRetrieval(ColPaliForRetrieval):
+    _checkpoint_conversion_mapping = {}
+
     @can_return_tuple
     @auto_docstring
     def forward(
@@ -322,7 +324,7 @@ class ColQwen2ForRetrieval(ColPaliForRetrieval):
 
         # Custom data preparation to fix an issue with the gradient flow when training with multiple GPUs.
         if inputs_embeds is None:
-            inputs_embeds = self.vlm.model.language_model.embed_tokens(input_ids)
+            inputs_embeds = self.vlm.language_model.embed_tokens(input_ids)
 
             if pixel_values is not None:
                 pixel_values = pixel_values.type(self.vlm.visual.get_dtype())
